@@ -34,6 +34,14 @@ var listener = app.listen(process.env.PORT, function () {
 // get date
 app.get("/api/:date?", function (req, res) {
   var date_string = req.params.date;
+  if (date_string === undefined || date_string === ""){
+    date_string = new Date();
+  }
+
+  if (!isNaN(date_string) && parseInt(date_string) > 4){
+    date_string = parseInt(date_string);
+  }
+  
   var date = new Date(date_string);
   if (!isNaN(date.getTime())){
     res.json({unix: date.getTime(),utc: date.toUTCString()});
